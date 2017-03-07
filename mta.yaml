@@ -7,7 +7,7 @@ modules:
    type: html5
    path: web
    requires:
-    - name: levcars09-uaa
+    - name: levxcars09-uaa
      
 
  - name: core-db
@@ -17,7 +17,7 @@ modules:
     - name: hdi-container
 
 resources:
- - name: levcars09-uaa
+ - name: levxcars09-uaa
    parameters:
      config_path: ./xs-security.json
    type: com.sap.xs.uaa
@@ -27,4 +27,3 @@ resources:
    properties:
       hdi-container-name: ${service-name}
    type: com.sap.xs.hdi-container
-
