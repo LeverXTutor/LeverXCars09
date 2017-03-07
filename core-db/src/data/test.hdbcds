@@ -1,0 +1,8 @@
+namespace LeverXCars09.core_db.data;
+
+context test {
+   type myKeyType: String(60);
+   entity myEntity {
+       key myID: myKeyType;
+   };
+}
