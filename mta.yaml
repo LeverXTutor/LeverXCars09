@@ -8,13 +8,20 @@ modules:
    path: web
    requires:
     - name: levxcars09-uaa
-     
 
  - name: core-db
    type: hdb
    path: core-db
    requires:
     - name: hdi-container
+      properties:
+        TARGET_CONTAINER: ~{hdi-container-name}
+    
+    - name: CrossSchemaService
+      group: SERVICE_REPLACEMENTS
+      properties:
+        key: hdi-sflight-service
+        service: ~{sflight-service-name}
 
 resources:
  - name: levxcars09-uaa
@@ -22,8 +29,14 @@ resources:
      config_path: ./xs-security.json
    type: com.sap.xs.uaa
 
-
  - name: hdi-container
    properties:
       hdi-container-name: ${service-name}
    type: com.sap.xs.hdi-container
+
+ - name: CrossSchemaService
+   type: org.cloudfoundry.existing-service
+   parameters:
+     service-name: CROSS_SCHEMA_SFLIGHT_00
+   properties:
+     sflight-service-name: ${service-name}
