@@ -22,6 +22,12 @@ modules:
       properties:
         key: hdi-sflight-service
         service: ~{sflight-service-name}
+        
+    - name: CrossContainerService
+      group: SERVICE_REPLACEMENTS
+      properties:
+        key: hdi-saperp-service
+        service: ~{saperp-service-name}
 
 resources:
  - name: levxcars09-uaa
@@ -40,3 +46,10 @@ resources:
      service-name: CROSS_SCHEMA_SFLIGHT_00
    properties:
      sflight-service-name: ${service-name}
+     
+ - name: CrossContainerService
+   type: org.cloudfoundry.existing-service
+   parameters:
+     service-name: SAPERP-3y1e18qwpvtwqq3w-SAPERP-hdi-container
+   properties:
+     saperp-service-name: ${service-name}
