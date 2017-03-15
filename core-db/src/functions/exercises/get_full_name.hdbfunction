@@ -1,0 +1,28 @@
+FUNCTION "LeverXCars09.core_db.functions.exercises::get_full_name" (
+	IN im_firstname NVARCHAR(40),
+	IN im_lastname NVARCHAR(40),
+	IN im_middlename NVARCHAR(40),
+	IN im_employeeid NVARCHAR(10) DEFAULT '' )
+	RETURNS ex_fullname NVARCHAR(256)
+	
+	LANGUAGE SQLSCRIPT 
+	SQL SECURITY INVOKER AS 
+BEGIN 
+ ex_fullname = '';
+ 
+ IF :im_lastname IS NOT NULL THEN
+	ex_fullname = :ex_fullname || :im_lastname;
+ END IF;
+ 
+ IF :im_firstname IS NOT NULL THEN
+	ex_fullname = :ex_fullname || ' ,' || :im_firstname;
+ END IF;
+ 
+ IF :im_middlename IS NOT NULL THEN
+	ex_fullname = :ex_fullname || ' ,' || :im_middlename;
+ END IF;
+ 
+ IF :im_employeeid <> '' THEN
+	ex_fullname = :ex_fullname || ' (' || :im_employeeid || ')';
+ END IF;
+END;

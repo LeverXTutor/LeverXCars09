@@ -1,0 +1,11 @@
+PROCEDURE "LeverXCars09.core_db.procedures::correct_dates" ( )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   AS
+BEGIN
+	UPDATE "LeverXCars09.core_db.data::core_model.Service"
+		SET ENDDATE = (SELECT ADD_DAYS(STARTDATE,ROUND(RAND() * (DAYS_BETWEEN(TO_DATE(STARTDATE), CURRENT_DATE))))
+			 FROM "LeverXCars09.core_db.synonyms::DUMMY")
+		WHERE ENDDATE < STARTDATE;
+END

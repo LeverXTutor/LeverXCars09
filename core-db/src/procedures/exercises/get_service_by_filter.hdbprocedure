@@ -1,0 +1,40 @@
+PROCEDURE "LeverXCars09.core_db.procedures.exercises::get_service_by_filter" (
+	IN im_start_date date,
+    IN im_end_date date,
+    OUT EX_PRODUCTS "LeverXCars09.core_db.data::core_model.Service")
+    
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA 
+   AS
+BEGIN
+	DECLARE MYCOND CONDITION FOR SQL_ERROR_CODE 10001;
+	DECLARE ERROR_CODE INTEGER = 0;
+	
+	BEGIN
+	    DECLARE EXIT HANDLER FOR MYCOND
+	    BEGIN AUTONOMOUS TRANSACTION
+	    	DECLARE parameter NVARCHAR(256) = 'start_date = '|| :im_start_date || 
+	                                   ' end_date = '||  :im_end_date; 
+		    INSERT INTO "LeverXCars09.core_db.data::log.errors"
+		         (ERROR_TIMESTAMP, OBJECT_SCHEMA_NAME, OBJECT_NAME, PARAMETER, SQL_ERROR_CODE, SQL_ERROR_MESSAGE)
+		         VALUES (current_timestamp,::CURRENT_OBJECT_SCHEMA,::CURRENT_OBJECT_NAME, 
+		                 :parameter , ::SQL_ERROR_CODE, ::SQL_ERROR_MESSAGE);
+	    END;
+		
+		IF :im_start_date > :im_end_date THEN
+		    ERROR_CODE = 1;
+			SIGNAL MYCOND SET MESSAGE_TEXT = 'Start date must be smaller then end date';
+		END IF;
+	END;
+	
+	IF ERROR_CODE = 1 THEN
+		ROLLBACK;
+	END IF;
+	
+	ex_products = 
+	SELECT * FROM "LeverXCars09.core_db.data::core_model.Service"
+		WHERE STARTDATE >= :im_start_date
+		  AND ENDDATE <= :im_end_date;
+END

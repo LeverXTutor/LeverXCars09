@@ -1,0 +1,13 @@
+FUNCTION "LeverXCars09.core_db.functions.exercises::test_add_mul" ( )
+	RETURNS TABLE (a Double, b Double, ADD Double, MUL Double)
+	LANGUAGE SQLSCRIPT 
+	SQL SECURITY INVOKER AS 
+BEGIN 
+ declare lt_tab table (a Double, b Double);
+ lt_tab.a[1] = 1.0;
+ lt_tab.b[1] = 2.0;
+ --lt_tab.*[2] = (3.0, 4.0);
+ RETURN SELECT a, b, "LeverXCars09.core_db.functions.exercises::simple_add_mult"(a, b).result_add as ADD,
+ "LeverXCars09.core_db.functions.exercises::simple_add_mult"(a,b).result_mul as MUL
+ FROM :lt_tab ORDER BY a;
+END;

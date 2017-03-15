@@ -1,0 +1,18 @@
+FUNCTION "LeverXCars09.core_db.functions.exercises::apply_discount" (
+	IN im_price decimal(15,2), 
+	IN im_discount decimal(15,2)) 
+    RETURNS ex_result decimal(15,2)--,ex_str string
+    
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER AS
+BEGIN
+     
+    --ex_str = "LeverXCars09.core_db.functions.exercises::get_full_name"(
+	--	'lol', 
+	--	'dfd', 
+	--	'df', 
+	--	'rr'
+	--);
+	
+	ex_result = :im_price - (:im_price * :im_discount);
+END;

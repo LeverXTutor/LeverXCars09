@@ -1,0 +1,10 @@
+FUNCTION "LeverXCars09.core_db.functions.exercises::simple_add_mult" (
+	IN x Double,
+	IN y Double
+	)
+	RETURNS result_add Double, result_mul Double
+LANGUAGE SQLSCRIPT READS SQL DATA AS
+BEGIN
+	result_add = :x + :y;
+	result_mul = :x * :y;
+END;

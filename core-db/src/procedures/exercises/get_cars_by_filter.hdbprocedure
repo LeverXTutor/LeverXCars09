@@ -1,0 +1,11 @@
+PROCEDURE "LeverXCars09.core_db.procedures.exercises::get_cars_by_filter" (
+	IN im_filter_string VARCHAR(5000), 
+    OUT ex_cars "LeverXCars09.core_db.data::core_model.Car" )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+   
+   ex_cars = APPLY_FILTER("LeverXCars09.core_db.data::core_model.Car", :im_filter_string) ; 
+END
