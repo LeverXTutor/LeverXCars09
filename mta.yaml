@@ -36,6 +36,18 @@ modules:
         service: ~{saperp-service-name}
 
 
+ - name: core-js
+   type: nodejs
+   path: core-js
+   provides:
+    - name: core-js-service
+      properties:
+        url: "${default-url}"
+   requires:
+     - name: levxcars09-uaa
+     - name: hdi-container
+     - name: core-db
+
 resources:
  - name: levxcars09-uaa
    parameters:
